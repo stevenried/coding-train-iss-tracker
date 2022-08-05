@@ -19,13 +19,16 @@ const marker = L.marker([0.0, 0.0], { icon: issIcon }).addTo(map)
 
 getISS()
 
+setInterval(getISS, 1500)
+
 async function getISS() {
   const response = await fetch(apiEndpoint)
   const data = await response.json()
   const { latitude, longitude } = data
 
   marker.setLatLng([latitude, longitude])
+  map.setView([latitude, longitude], 1)
 
-  document.querySelector('[data-id-lat]').textContent = latitude
-  document.querySelector('[data-id-long]').textContent = longitude
+  document.querySelector('[data-id-lat]').textContent = latitude.toFixed(2)
+  document.querySelector('[data-id-long]').textContent = longitude.toFixed(2)
 }
